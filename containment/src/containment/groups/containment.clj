@@ -18,3 +18,10 @@
        :phases { :configure (phase-fn
                              (exec-script (ls)))}
        :compute titan-data-center)))
+
+(defn install-apache2
+  (lift
+    (group-spec
+      "fullstack"
+      :phases { :configure (phase-fn
+                            (exec-script (sudo apt-get install apache2)))})))
