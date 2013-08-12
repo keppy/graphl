@@ -10,7 +10,9 @@
                  [compojure "1.1.5"]
                  [shoreleave/shoreleave-remote-ring "0.3.0"]
                  [shoreleave/shoreleave-remote "0.3.0"]
-                 [prismatic/dommy "0.1.1"]]
+                 [prismatic/dommy "0.1.1"]
+                 [clojurewerkz/cassaforte "1.1.0"]
+                 [org.clojure/tools.nrepl "0.2.3"]]
   :ring {:handler signal-station.remotes/app}
 
   :plugins [[lein-cljsbuild "0.3.2"]
