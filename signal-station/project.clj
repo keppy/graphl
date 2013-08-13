@@ -11,9 +11,11 @@
                  [shoreleave/shoreleave-remote-ring "0.3.0"]
                  [shoreleave/shoreleave-remote "0.3.0"]
                  [prismatic/dommy "0.1.1"]
-                 [clojurewerkz/cassaforte "1.1.0"]
+                 [clojurewerkz/titanium "1.0.0-alpha2"]
                  [org.clojure/tools.nrepl "0.2.3"]]
-  :ring {:handler signal-station.remotes/app}
+  :ring {:handler signal-station.remotes/app
+         :nrepl {:start? true :port 7888}
+         :port 3000}
 
   :plugins [[lein-cljsbuild "0.3.2"]
             [lein-ring "0.8.6"]]

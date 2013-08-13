@@ -1,17 +1,9 @@
 (ns signal-station.graph
-  (:require [clojurewerkz.cassaforte.client :as client])
-  (:use clojurewerkz.cassaforte.cql
-        clojurewerkz.cassaforte.query))
+  (:require [clojurewerkz.titanium.graph :as tg]))
 
-(defn bootstrap [keyspace table]
-  (client/connect! ["127.0.0.1"])
-  (create-keyspace keyspace)
-  (use-keyspace keyspace)
-
-  (create-table table
-                (column-definitions {:email :varchar
-                                     :primary-key [:email]})))
-
-(defn add-user [email table]
-  (client/prepared
-   (insert table {:email email})))
+(defn- main
+  [& args]
+  ;; opens a BerkeleyDB-backed graph database in a temporary directory
+  (tg/open (System/getProperty "java.io.tmpdir"))
+  "Graph business goes here")
+(main))
