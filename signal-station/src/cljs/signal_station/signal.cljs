@@ -1,12 +1,12 @@
-(ns signal-station.signal)
-(:use-macros
-  [dommy.macros :only [sel sel1 node]]
-  [cljs.core.async.macros :only [go])
-(:require
-  [cljs.core.asyn :as async :refer [<! >! chan close! sliding-buffer put! alts!]]
-  [dommy.utils :as utils]
-  [dommy.core :as dommy]
-  [shoreleave.remotes.http-rpc :refer [remote-callback])
+(ns signal-station.signal
+  (:use-macros
+   [dommy.macros :only [sel sel1 node]]
+   [cljs.core.async.macros :only [go]])
+  (:require
+   [cljs.core.asyn :as async :refer [<! >! chan close! sliding-buffer put! alts!]]
+   [dommy.utils :as utils]
+   [dommy.core :as dommy]
+   [shoreleave.remotes.http-rpc :refer [remote-callback]]))
 
 (defn render-templates [state]
       (dommy.append! (sel1 :#signup)
@@ -14,7 +14,7 @@
                       [:div
                        [:input#email-value
                         [:span#email-alert {:text state}
-                         [:button#email-submit {:text "submit"}]]]]))))
+                         [:button#email-submit {:text "submit"}]]]])))
 
 (defn click-chan [handling-selector value-selector msg-name]
   (let [rc (chan)
