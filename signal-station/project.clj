@@ -13,6 +13,7 @@
                  [shoreleave/shoreleave-remote "0.3.0"]
                  [prismatic/dommy "0.1.1"]
                  [clojurewerkz/titanium "1.0.0-beta1"]
+                 [clojurewerkz/ogre "2.3.0.1"]
                  [org.clojure/tools.nrepl "0.2.3"]]
   :repositories {"sonatype-oss-public" "https://oss.sonatype.org/content/groups/public/"}
   :ring {:handler signal-station.remotes/app
