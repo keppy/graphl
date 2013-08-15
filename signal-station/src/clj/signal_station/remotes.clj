@@ -1,19 +1,25 @@
 (ns signal-station.remotes
   (:require [signal-station.core :refer [handler]]
-            [signal-station.graph :as [graph]]
             [compojure.handler :refer [site]]
             [shoreleave.middleware.rpc :refer [defremote wrap-rpc]]
-            [clojurewerkz.titanium.graph :as [tg]]
-            [clojurewerkz.titanium.vertices :as [tv]]))
-  
-(tg/open (System/getProperty "java.io.tmpdir"))
+            [clojurewerkz.titanium.graph :refer [transact! open]]
+            [clojurewerkz.titanium.vertices :as tv]))
+
+(defn get-email [email]
+  (transact!
+   (get
+    (tv/find-by-kv :email email)
+    :email)))
+
+(defn create-email! [email]
+  (transact!
+   (tv/create! {:email email})))
 
 (defremote beta-signup [email]
-  (tg/transact! 
-    (let [entry (tv/find-by-kv :email email)]
-      (cond
-        (= email entry) "Yo, you're already in the graph."
-        :else  (tv.create! {:email email}) "You're in the graph now, we'll keep you posted on the beta!"))))
+  (open (System/getProperty "java.io.tmpdir"))
+  (cond
+   (= email (get-email email) "Yo, you're already in the graph.")
+   :else  (create-email!) "We've added you to the graph. We will let you know when your beta account is ready and help you get started."))
 
 (def app (-> (var handler)
              (wrap-rpc)
