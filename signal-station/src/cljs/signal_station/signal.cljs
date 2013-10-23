@@ -13,8 +13,7 @@
                      (node
                       [:div
                        [:input#email-value
-                        [:span#email-alert {:text state}
-                         [:button#email-submit {:text "submit"}]]]])))
+                        [:button.btn-success {:text state}]]])))
 
 (defn click-chan [handling-selector value-selector msg-name]
   (let [rc (chan)
@@ -29,7 +28,7 @@
                    %))
 
 (defn app-loop [start-state]
-  (let [ new-email-click (click-chan :#email-submit :#email-value :new-email)]
+  (let [new-email-click (click-chan :.btn-success :#email-value :new-email)]
     (go
      (loop [state start-state]
        (render-templates state)
@@ -37,4 +36,4 @@
        (render-templates state)))))
 
 (defn ^:export init []
-  (app-loop { :message "Sign up for the beta." }))
+  (app-loop "Sign up for the beta."))

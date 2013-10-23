@@ -18,7 +18,6 @@ var mapState = {
 
     state: "first-point",
     latlngs: [],
-    currVector: [],
     nthLatLngStart: null,
     polyline: null,
     transition: function(action) {
@@ -28,14 +27,13 @@ var mapState = {
 
 		if (mapState.state === "first-point") {
 		    mapState.polyline = L.polyline([e.latlng]).addTo(map);
-		    mapState.currVector.push(e.latlng);
+		    mapState.latlngs.push(e.latlng);
 
 		    mapState.state = "open-polyline";
 		}
 		else if (mapState.state === "open-polyline") {
 		    mapState.polyline.addLatLng(e.latlng);
-		    mapState.currVector.push(e.latlng);
-		    mapState.latlngs.push(mapState.currVector);
+		    mapState.latlngs.push(e.latlng);
 
 		    mapState.nthLatLngStart = e.latlng;      // Set start for nth point
 		    mapState.state = "expecting-nth-point";
@@ -43,16 +41,17 @@ var mapState = {
 		else if (mapState.state === "expecting-nth-point") {
 		    mapState.polyline = L.polyline([mapState.nthLatLngStart]).addTo(map);
 		    mapState.polyline.addLatLng(e.latlng);
+		    mapState.latlngs.push(e.latlng);
 
 		    mapState.state = "open-polyline";
 		}
 	    }
 	    else if (action === "request-weights") {
 		mapState.state = "requesting-weights";
-		server.transition("request-weights", this.latlngs);
+		client.transition("request-weights", mapState.latlngs);
 	    }
 	    else if (action === "recieve-weights" &&
-		     e !== null)
+		     e !== null) // e is data here
 	    {
 		mapState.state = "recieving-weights";
 		mapState.latlngs = e;
@@ -64,14 +63,14 @@ var mapState = {
 }
 
 // Server DAS GRAPH QUANTS
-var server = {
+var client = {
     state: "waiting",
     transition: function(state, e, data) {
-	this.state = state;
+	client.state = state;
 	$.post($graphl_map_api + "/route-finder", data) 
 	    .done(function(data) {
-		server.callback(data);
-		server.state = "waiting";
+		client.callback(data);
+		client.state = "waiting";
 	    });
     },
     callback: function(data) {

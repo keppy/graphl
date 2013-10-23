@@ -5,20 +5,17 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :source-paths ["src/clj"]
   :dependencies [[org.clojure/clojure "1.5.1"]
-                 [org.clojure/core.async "0.1.0-SNAPSHOT"]
+                 [org.clojure/core.async "0.1.242.0-44b1e3-alpha"]
                  [ring/ring-core "1.2.0"]
                  [ring/ring-jetty-adapter "1.2.0"]
                  [compojure "1.1.5"]
                  [shoreleave/shoreleave-remote-ring "0.3.0"]
                  [shoreleave/shoreleave-remote "0.3.0"]
                  [prismatic/dommy "0.1.1"]
-                 [clojurewerkz/titanium "1.0.0-beta1"]
-                 [clojurewerkz/ogre "2.3.0.1"]
                  [org.clojure/tools.nrepl "0.2.3"]]
-  :repositories {"sonatype-oss-public" "https://oss.sonatype.org/content/groups/public/"}
   :ring {:handler signal-station.remotes/app
          :nrepl {:start? true :port 7888}
-         :port 3000}
+         :port 8087}
 
   :plugins [[lein-cljsbuild "0.3.2"]
             [lein-ring "0.8.6"]]
